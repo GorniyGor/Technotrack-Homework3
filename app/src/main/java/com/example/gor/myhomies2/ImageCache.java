@@ -16,8 +16,8 @@ import java.util.ArrayList;
 public class ImageCache {
 
     private static volatile ImageCache sSelf;
-    private ArrayList<String> mUrls;
-    private SparseArray<Bitmap> mImages;
+    private ArrayList<String> mUrls = new ArrayList<String>();
+    private SparseArray<Bitmap> mImages = new SparseArray<Bitmap>();
 
     public static ImageCache getInstance() {
         if (sSelf == null) {
