@@ -8,9 +8,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONTokener;
 
-public class DownloadJSONAsync extends AsyncTask<String, Integer, JSONArray> {
+public class DownloadJSONAsync extends AsyncTask<String, Object, JSONArray> {
     public static final String JSON_URL = "http://188.166.49.215/tech/imglist.json";
     private static final String TAG = "myLogs";
+
+    private RecyclerAdapter mRecyclerAdapter;
 
     public static int countOfImages = 0;
 
@@ -21,23 +23,26 @@ public class DownloadJSONAsync extends AsyncTask<String, Integer, JSONArray> {
             HttpRequest request = new HttpRequest(params[0]);
             int status = request.makeRequest("JSON");
 
-            Log.d(TAG, "request");
+            Log.d(TAG, "Request");
 
             //Получаем из файла массив ссылок
             if (status == HttpRequest.REQUEST_OK) {
                 JSONTokener jtk = new JSONTokener(request.getContent());
-                Log.d(TAG, "Status is OK");
+                Log.d(TAG, "There is gotten JSONTokener");
                 try {
-                    JSONArray jsonArray = (JSONArray)jtk.nextValue();
+                    JSONArray jsonArray = (JSONArray) jtk.nextValue();
                     countOfImages = jsonArray.length();
-                    Log.d(TAG, "lenghtPUT = "+countOfImages);
-                    
+                    Log.d(TAG, "lenghtPUT = " + countOfImages);
+
+
+                    //Log.d(TAG, "URLs are added");
+
                     return jsonArray;
-                }
-                catch (JSONException ex) {
+                } catch (JSONException ex) {
                     ex.printStackTrace();
                 }
             }
+            else Log.d(TAG, "REQUEST_ERROR");
             /*else {
                 mErrorStringID = request.getErrorStringId();
             }*/
@@ -46,7 +51,7 @@ public class DownloadJSONAsync extends AsyncTask<String, Integer, JSONArray> {
             mErrorStringID = R.string.too_few_params;
         }*/
 
-        Log.d(TAG, "out");
+        Log.d(TAG, "Come out from doInBackgroud");
 
 
         return null;
@@ -54,9 +59,11 @@ public class DownloadJSONAsync extends AsyncTask<String, Integer, JSONArray> {
 
     @Override
     protected void onPostExecute(JSONArray linksArray) {
+
         ImageCache imageCache = ImageCache.getInstance();
-        Log.d(TAG, "lenghtGET = ");
-        for(int i = 0; i < linksArray.length(); i++){
+        Log.d(TAG, "onPostExecute");//Log.d(TAG, "Cache is instanced");
+
+        for (int i = 0; i < linksArray.length(); i++) {
             try {
                 imageCache.setUrl(linksArray.getString(i));
             } catch (JSONException e) {
@@ -64,6 +71,12 @@ public class DownloadJSONAsync extends AsyncTask<String, Integer, JSONArray> {
             }
         }
 
+        if(mRecyclerAdapter != null) mRecyclerAdapter.notifyDataSetChanged();
+        else Log.d(TAG, "RecyclerAdapter is null");
 
+    }
+
+    public void setAdapter(RecyclerAdapter mRecyclerAdapter) {
+        this.mRecyclerAdapter = mRecyclerAdapter;
     }
 }
