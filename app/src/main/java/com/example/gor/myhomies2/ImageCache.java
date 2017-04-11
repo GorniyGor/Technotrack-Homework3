@@ -51,7 +51,7 @@ public class ImageCache {
     public void setImage(Bitmap image, int position){
         if(image != null) {
             mImages.put(position, image);
-            Log.d(TAG, "New image");
+            Log.d(TAG, "New image " + mUrls.get(position));
         }
         else Log.d(TAG, "SET: Изображение есть NULL");
     }

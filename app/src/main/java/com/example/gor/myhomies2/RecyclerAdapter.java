@@ -1,7 +1,6 @@
 package com.example.gor.myhomies2;
 
 import android.graphics.Bitmap;
-import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -47,15 +46,13 @@ class RecyclerAdapter extends RecyclerView.Adapter<SimpleViewHolder> {
             mDataSource.setAdapter(this, position);
             mDataSource.toLoadImage(position);
             holder.setImage(android.R.drawable.sym_def_app_icon);
-
-            //notifyItemChanged(position);
         }
 
     }
 
     @Override
     public int getItemCount() {
-        return DownloadJSONAsync.countOfImages; /*imageCache.getLength();*/
+        return DownloadJSONAsync.countOfImages;
     }
 
     @Override

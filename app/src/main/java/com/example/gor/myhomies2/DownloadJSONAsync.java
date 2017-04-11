@@ -33,23 +33,13 @@ public class DownloadJSONAsync extends AsyncTask<String, Object, JSONArray> {
                     JSONArray jsonArray = (JSONArray) jtk.nextValue();
                     countOfImages = jsonArray.length();
                     Log.d(TAG, "lenghtPUT = " + countOfImages);
-
-
-                    //Log.d(TAG, "URLs are added");
-
                     return jsonArray;
                 } catch (JSONException ex) {
                     ex.printStackTrace();
                 }
             }
             else Log.d(TAG, "REQUEST_ERROR");
-            /*else {
-                mErrorStringID = request.getErrorStringId();
-            }*/
         }
-        /*else {
-            mErrorStringID = R.string.too_few_params;
-        }*/
 
         Log.d(TAG, "Come out from doInBackgroud");
 
@@ -61,7 +51,7 @@ public class DownloadJSONAsync extends AsyncTask<String, Object, JSONArray> {
     protected void onPostExecute(JSONArray linksArray) {
 
         ImageCache imageCache = ImageCache.getInstance();
-        Log.d(TAG, "onPostExecute");//Log.d(TAG, "Cache is instanced");
+        Log.d(TAG, "onPostExecute");
 
         for (int i = 0; i < linksArray.length(); i++) {
             try {

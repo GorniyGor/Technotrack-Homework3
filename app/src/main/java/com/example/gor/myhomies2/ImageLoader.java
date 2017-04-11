@@ -1,10 +1,8 @@
 package com.example.gor.myhomies2;
 
 import android.graphics.Bitmap;
-import android.os.Bundle;
-import android.os.Handler;
 
-import java.util.concurrent.Callable;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -31,7 +29,7 @@ public class ImageLoader {
         executor = Executors.newFixedThreadPool(num);
     }
 
-    public void toLoadImage(final int position/*final String url, Bundle developerPayload*/) { //Откуда требование final?
+    public void toLoadImage(final int position) { //Откуда требование final?
 
         if (/*mListener != null*/true) {
             executor.submit(new Runnable() {
