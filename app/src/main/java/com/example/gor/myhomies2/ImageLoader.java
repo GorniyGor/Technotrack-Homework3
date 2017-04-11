@@ -17,6 +17,8 @@ import java.util.concurrent.Executors;
 public class ImageLoader {
 
     private ExecutorService executor;
+    private RecyclerAdapter mRecyclerAdapter;
+    private int position;
 
     public ImageLoader(/*OnImageLoadingListener listener, Handler caller*/) {
         /*mListener = listener;
@@ -41,6 +43,8 @@ public class ImageLoader {
                     if (status == HttpRequest.REQUEST_OK) {
                         Bitmap image = request.getBitmap();
                         ImageCache.getInstance().setImage(image);
+
+                        mRecyclerAdapter.notifyItemChanged(position);
                     }
                 }
             });
@@ -48,6 +52,11 @@ public class ImageLoader {
     }
 
     public void stop(){ executor.shutdown();}
+
+    public void setAdapter(RecyclerAdapter mRecyclerAdapter, int position) {
+        this.mRecyclerAdapter = mRecyclerAdapter;
+        this.position = position;
+    }
 }
 
 

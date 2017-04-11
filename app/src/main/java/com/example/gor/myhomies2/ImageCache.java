@@ -1,6 +1,7 @@
 package com.example.gor.myhomies2;
 
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.util.SparseArray;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
  */
 public class ImageCache {
 
+    private static final String TAG = "myLogs" ;
     private static volatile ImageCache sSelf;
     private ArrayList<String> mUrls = new ArrayList<String>();
     private SparseArray<Bitmap> mImages = new SparseArray<Bitmap>();
@@ -32,7 +34,12 @@ public class ImageCache {
 
 
     public Bitmap getImage(int position) {
-        return mImages.get(position);
+        if(mImages.get(position) != null){
+            Log.d(TAG, "Нет Проблемесы");
+            return mImages.get(position);
+        }
+        else Log.d(TAG, "GET: Изображение есть NULL");
+        return null;
     }
 
     public String getUrl (int position){ return mUrls.get(position); }
@@ -42,7 +49,11 @@ public class ImageCache {
     }
 
     public void setImage(Bitmap image){
-        mImages.put(mUrls.size()-1,image);
+        if(image != null) {
+            mImages.put(mUrls.size() - 1, image);
+            Log.d(TAG, "New image");
+        }
+        else Log.d(TAG, "SET: Изображение есть NULL");
     }
 
     /*public int getLength (){

@@ -44,9 +44,11 @@ class RecyclerAdapter extends RecyclerView.Adapter<SimpleViewHolder> {
             holder.setImage(bm);
         }
         else {
+            mDataSource.setAdapter(this, position);
             mDataSource.toLoadImage(position);
             holder.setImage(android.R.drawable.sym_def_app_icon);
-            mDataSource.stop();
+
+            //notifyItemChanged(position);
         }
 
     }
@@ -54,5 +56,10 @@ class RecyclerAdapter extends RecyclerView.Adapter<SimpleViewHolder> {
     @Override
     public int getItemCount() {
         return DownloadJSONAsync.countOfImages; /*imageCache.getLength();*/
+    }
+
+    @Override
+    public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
+        mDataSource.stop();
     }
 }
