@@ -42,7 +42,7 @@ public class ImageLoader {
 
                     if (status == HttpRequest.REQUEST_OK) {
                         Bitmap image = request.getBitmap();
-                        ImageCache.getInstance().setImage(image);
+                        ImageCache.getInstance().setImage(image, position);
 
                         mRecyclerAdapter.notifyItemChanged(position);
                     }

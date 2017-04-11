@@ -35,7 +35,7 @@ public class ImageCache {
 
     public Bitmap getImage(int position) {
         if(mImages.get(position) != null){
-            Log.d(TAG, "Нет Проблемесы");
+            Log.d(TAG, "Successful getting image from cache");
             return mImages.get(position);
         }
         else Log.d(TAG, "GET: Изображение есть NULL");
@@ -48,9 +48,9 @@ public class ImageCache {
         mUrls.add(url);
     }
 
-    public void setImage(Bitmap image){
+    public void setImage(Bitmap image, int position){
         if(image != null) {
-            mImages.put(mUrls.size() - 1, image);
+            mImages.put(position, image);
             Log.d(TAG, "New image");
         }
         else Log.d(TAG, "SET: Изображение есть NULL");
