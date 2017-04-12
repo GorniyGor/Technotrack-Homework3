@@ -1,6 +1,7 @@
 package com.example.gor.myhomies2;
 
 import android.graphics.Bitmap;
+import android.media.Image;
 
 
 import java.util.concurrent.ExecutorService;
@@ -18,9 +19,11 @@ public class ImageLoader {
     private RecyclerAdapter mRecyclerAdapter;
     private int position;
 
-    public ImageLoader(/*OnImageLoadingListener listener, Handler caller*/) {
-        /*mListener = listener;
-        mCallerHandler = caller;*/
+    private final ImageLoadedListener loadedListener;
+
+    public ImageLoader(/*Handler caller*/ ImageLoadedListener imageLoadedListener) {
+        /*mCallerHandler = caller;*/
+        loadedListener = imageLoadedListener;
         start();
     }
 
@@ -29,9 +32,9 @@ public class ImageLoader {
         executor = Executors.newFixedThreadPool(num);
     }
 
-    public void toLoadImage(final int position) { //Откуда требование final?
+    public void  toLoadImage(final int position) { //Откуда требование final?
 
-        if (/*mListener != null*/true) {
+        if (loadedListener != null) {
             executor.submit(new Runnable() {
                 @Override
                 public void run() {
@@ -40,9 +43,7 @@ public class ImageLoader {
 
                     if (status == HttpRequest.REQUEST_OK) {
                         Bitmap image = request.getBitmap();
-                        ImageCache.getInstance().setImage(image, position);
-
-                        mRecyclerAdapter.notifyItemChanged(position);
+                        loadedListener.onImageLoaded(image, position);
                     }
                 }
             });
@@ -51,10 +52,10 @@ public class ImageLoader {
 
     public void stop(){ executor.shutdown();}
 
-    public void setAdapter(RecyclerAdapter mRecyclerAdapter, int position) {
-        this.mRecyclerAdapter = mRecyclerAdapter;
-        this.position = position;
+    interface ImageLoadedListener {
+        void onImageLoaded(Bitmap bitmap, int position);
     }
+
 }
 
 

@@ -17,6 +17,15 @@ class RecyclerAdapter extends RecyclerView.Adapter<SimpleViewHolder> {
     private final WeakReference<LayoutInflater> localInflater;
     private ImageCache imageCache;
     private ImageLoader mDataSource;
+    private ImageLoader.ImageLoadedListener mLoadedListener =
+            new ImageLoader.ImageLoadedListener() {
+                @Override
+                public void onImageLoaded(Bitmap image, int position) {
+                    ImageCache.getInstance().setImage(image, position);
+
+                    notifyItemChanged(position);
+                }
+            };
 
 
     public RecyclerAdapter(LayoutInflater layoutInflater) {
@@ -28,7 +37,7 @@ class RecyclerAdapter extends RecyclerView.Adapter<SimpleViewHolder> {
     public SimpleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = localInflater.get();
         if (inflater != null) {
-            mDataSource = new ImageLoader();
+            mDataSource = new ImageLoader(mLoadedListener);
             return new SimpleViewHolder(inflater.inflate(R.layout.activity_main, parent, false));
         }
         else {
@@ -43,7 +52,6 @@ class RecyclerAdapter extends RecyclerView.Adapter<SimpleViewHolder> {
             holder.setImage(bm);
         }
         else {
-            mDataSource.setAdapter(this, position);
             mDataSource.toLoadImage(position);
             holder.setImage(android.R.drawable.sym_def_app_icon);
         }
