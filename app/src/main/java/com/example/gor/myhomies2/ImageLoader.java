@@ -16,8 +16,6 @@ import java.util.concurrent.Executors;
 public class ImageLoader {
 
     private ExecutorService executor;
-    private RecyclerAdapter mRecyclerAdapter;
-    private int position;
 
     private final ImageLoadedListener loadedListener;
 
@@ -52,7 +50,8 @@ public class ImageLoader {
 
     public void stop(){ executor.shutdown();}
 
-    interface ImageLoadedListener {
+    //Для каких-то действий после скачивания
+    public interface ImageLoadedListener {
         void onImageLoaded(Bitmap bitmap, int position);
     }
 

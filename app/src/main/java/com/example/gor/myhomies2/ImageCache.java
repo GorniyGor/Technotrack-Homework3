@@ -56,6 +56,8 @@ public class ImageCache {
         else Log.d(TAG, "SET: Изображение есть NULL");
     }
 
+
+
     /*public int getLength (){
         return mUrls.size();
     }*/
