@@ -26,17 +26,6 @@ class RecyclerAdapter extends RecyclerView.Adapter<SimpleViewHolder> {
     private final WeakReference<LayoutInflater> localInflater;
     private NewImageCache imageCache;
 
-    //Without using service
-    /*private ImageLoader mDataSource;
-    private ImageLoader.ImageLoadedListener mLoadedListener =
-            new ImageLoader.ImageLoadedListener() {
-                @Override
-                public void onImageLoaded(Bitmap image, int position) {
-                    ImageCache.getInstance().setImage(image, position);
-
-                    notifyItemChanged(position);
-                }
-            };*/
     //For Service---------------------
     private LoadService service;
     private ServiceConnection mServiceConnection = new ServiceConnection() {
@@ -57,6 +46,7 @@ class RecyclerAdapter extends RecyclerView.Adapter<SimpleViewHolder> {
             notifyItemChanged(position);
         }
     };
+    //------------------------------------
 
 
     public RecyclerAdapter(LayoutInflater layoutInflater) {
@@ -78,7 +68,6 @@ class RecyclerAdapter extends RecyclerView.Adapter<SimpleViewHolder> {
             if (service != null) {
                 service.setNotifyListener(mNotifyListener);
             }
-            /*mDataSource = new ImageLoader(mLoadedListener);*/
             return new SimpleViewHolder(inflater.inflate(R.layout.activity_main, parent, false));
         }
         else {
@@ -93,7 +82,6 @@ class RecyclerAdapter extends RecyclerView.Adapter<SimpleViewHolder> {
             holder.setImage(bm);
         }
         else {
-            /*mDataSource.toLoadImage(position);*/
             if (service != null) {
                 service.loadImage(position);
             }
@@ -109,7 +97,6 @@ class RecyclerAdapter extends RecyclerView.Adapter<SimpleViewHolder> {
 
     @Override
     public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
-        /*mDataSource.stop();*/
         service.unbindService(mServiceConnection);//Сервис  - это контекст, поэтому можем вызвать данный метод
     }
 }

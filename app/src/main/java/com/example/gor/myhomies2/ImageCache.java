@@ -3,6 +3,7 @@ package com.example.gor.myhomies2;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Environment;
 import android.util.Log;
 import android.util.SparseArray;
 
@@ -62,6 +63,7 @@ public class ImageCache {
         }
         else Log.d(TAG, "SET: Изображение есть NULL");
     }
+
 
 
 }
