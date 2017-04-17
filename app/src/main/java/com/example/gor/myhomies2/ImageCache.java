@@ -1,9 +1,16 @@
 package com.example.gor.myhomies2;
 
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.util.SparseArray;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 /**
@@ -57,8 +64,4 @@ public class ImageCache {
     }
 
 
-
-    /*public int getLength (){
-        return mUrls.size();
-    }*/
 }

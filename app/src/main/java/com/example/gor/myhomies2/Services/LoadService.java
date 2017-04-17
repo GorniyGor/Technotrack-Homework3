@@ -20,7 +20,7 @@ public class LoadService extends Service {
             new ImageLoader.ImageLoadedListener() {
                 @Override
                 public void onImageLoaded(Bitmap image, int position) {
-                    ImageCache.getInstance().setImage(image, position);
+                    NewImageCache.getInstance().setImage(image, position);
 
                     //notifyItemChanged(position);
                     mNotifyListener.onNotify(position);
@@ -38,7 +38,7 @@ public class LoadService extends Service {
         mDataSource.toLoadImage(position);
     }
 
-    // КРИВОЕ МЕСТО, НУЖНО СДЕЛАТЬ ПО-ДРУГОМУ
+    // КРИВОЕ МЕСТО, НУЖНО СДЕЛАТЬ ПО-ДРУГОМУ ----------!!!!!!!!!!!!!-------------
     public void setNotifyListener(NotifyListener mNotifyListener) {
         this.mNotifyListener = mNotifyListener;
     }

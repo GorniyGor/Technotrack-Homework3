@@ -24,7 +24,7 @@ import static android.content.Context.BIND_AUTO_CREATE;
 class RecyclerAdapter extends RecyclerView.Adapter<SimpleViewHolder> {
 
     private final WeakReference<LayoutInflater> localInflater;
-    private ImageCache imageCache;
+    private NewImageCache imageCache;
 
     //Without using service
     /*private ImageLoader mDataSource;
@@ -61,8 +61,9 @@ class RecyclerAdapter extends RecyclerView.Adapter<SimpleViewHolder> {
 
     public RecyclerAdapter(LayoutInflater layoutInflater) {
         localInflater = new WeakReference<LayoutInflater>(layoutInflater);
-        imageCache = ImageCache.getInstance();
-        //imageCache.instanceLruCache();
+        imageCache = NewImageCache.getInstance();
+        imageCache.instanceLruCache();
+        imageCache.instanceContext(localInflater.get().getContext());
 
         Intent i = new Intent(localInflater.get().getContext(), LoadService.class);
         localInflater.get().getContext().bindService(i, mServiceConnection, BIND_AUTO_CREATE);
@@ -74,7 +75,9 @@ class RecyclerAdapter extends RecyclerView.Adapter<SimpleViewHolder> {
         if (inflater != null) {
 
             // Вставил именно сюда, чтобы успели присоединиться к сервису в конструкторе
-            service.setNotifyListener(mNotifyListener);
+            if (service != null) {
+                service.setNotifyListener(mNotifyListener);
+            }
             /*mDataSource = new ImageLoader(mLoadedListener);*/
             return new SimpleViewHolder(inflater.inflate(R.layout.activity_main, parent, false));
         }
@@ -91,7 +94,9 @@ class RecyclerAdapter extends RecyclerView.Adapter<SimpleViewHolder> {
         }
         else {
             /*mDataSource.toLoadImage(position);*/
-            service.loadImage(position);
+            if (service != null) {
+                service.loadImage(position);
+            }
             holder.setImage(android.R.drawable.sym_def_app_icon);
         }
 

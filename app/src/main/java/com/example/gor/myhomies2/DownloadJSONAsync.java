@@ -4,6 +4,8 @@ package com.example.gor.myhomies2;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.example.gor.myhomies2.Services.NewImageCache;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONTokener;
@@ -50,7 +52,7 @@ public class DownloadJSONAsync extends AsyncTask<String, Object, JSONArray> {
     @Override
     protected void onPostExecute(JSONArray linksArray) {
 
-        ImageCache imageCache = ImageCache.getInstance();
+        NewImageCache imageCache = NewImageCache.getInstance();
         Log.d(TAG, "onPostExecute");
 
         for (int i = 0; i < linksArray.length(); i++) {

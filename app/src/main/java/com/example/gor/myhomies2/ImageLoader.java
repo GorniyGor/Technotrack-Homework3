@@ -4,6 +4,8 @@ import android.graphics.Bitmap;
 import android.media.Image;
 
 
+import com.example.gor.myhomies2.Services.NewImageCache;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -36,7 +38,7 @@ public class ImageLoader {
             executor.submit(new Runnable() {
                 @Override
                 public void run() {
-                    HttpRequest request = new HttpRequest(ImageCache.getInstance().getUrl(position));
+                    HttpRequest request = new HttpRequest(NewImageCache.getInstance().getUrl(position));
                     int status = request.makeRequest("IMAGE");
 
                     if (status == HttpRequest.REQUEST_OK) {
